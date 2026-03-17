@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список дел</title>
+    <link rel="icon" href="flower-bouquet_4326138.png" type="image/x-icon">
+    <style>
+        .main-title {
+            color: blue;
+        }
+        .date {
+            font-size: 12px;
+            color: gray;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="main-title">СПИСОК ДЕЛ</h1>
+    
+    <form>
+        <input type="text" placeholder="Новый элемент списка">
+        <button type="button">Создать</button>
+        <button type="button">Очистить все</button>
+    </form>
+    
+    <ol>
+        <li><input type="checkbox"> Почесать кошку <span class="date">от 24.08.2023</span> <button>❌</button></li>
+        <li><input type="checkbox"> Полить картошку <span class="date">от 24.08.2023</span> <button>❌</button></li>
+        <li><input type="checkbox"> Сложить в лукошко <span class="date">от 24.08.2023</span> <button>❌</button></li>
+    </ol>
+    
+    <footer>
+        <hr>
+        <p>© Список дел, 2026. Все права защищены.</p>
+    </footer>
+</body>
+</html>
