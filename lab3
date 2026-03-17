@@ -1,0 +1,47 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Путешествия</title>
+</head>
+<body>
+
+    <div style="border: 2px solid black; padding: 20px; width: 1000px;">
+
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">ПУТЕШЕСТВИЯ</div>
+        
+        <div style="font-size: 14px; margin-bottom: 30px;">
+            навигация по блокам с якорями
+        </div>
+
+        
+        <table border="1" cellpadding="8" cellspacing="0" width="100%" height="600">
+            <tr height="70">
+                <td colspan="2" height="70"><strong>НАЗВАНИЕ СТРАНЫ</strong><br>блок &lt;header&gt; стили для заголовков h1, h2, h3</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>Карта регионов</strong><br>Кликабельное svg изображение с возможностью выбора + анимация + мобилка</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>Описание</strong><br>Красиво оформленный текст стили для блока с текстом</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>Погода</strong><br>желательно на карте, либо прогноз по регионам/городам блок с min-height</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>О нас/ о стране</strong><br>блок с цифрами, тезисно стили с display:flex</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>Форма обратной связи/Задать вопрос</strong><br>форма для ввода и отправки текста стили элементов управления</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>FAQ</strong><br>раскрывающие поля обработка раскрывашек</td>
+            </tr>
+            <tr height="70">
+                <td colspan="2" height="70"><strong>Контакты</strong><br>блок &lt;footer&gt;</td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+</html>
