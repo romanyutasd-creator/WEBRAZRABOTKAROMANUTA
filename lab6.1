@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>6</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .task {
+            margin-bottom: 20px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .code {
+            font-family: monospace;
+            background: #eee;
+            padding: 5px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            min-height: 50px;
+        }
+        button {
+            margin: 5px 0;
+        }
+        input {
+            margin: 5px 0;
+        }
+        hr {
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>6</h1>
+
+<!--1 -->
+<div class="task">
+    <h3>Задача 1. Основные операции с массивами</h3>
+    
+    <div class="code">
+        // 1.1 Найти максимальную разницу между элементами массива<br>
+        // 1.2 Вернуть массив без повторяющихся элементов<br>
+        // 1.3 Дан массив объектов, вернуть только те, у которых isDone: true
+    </div>
+    
+    <p>Массив чисел (через запятую): <input type="text" id="task1_arr" value="5, 12, 3, 8, 1, 20" style="width: 300px;"></p>
+    <button onclick="task1_all()">Выполнить все подзадачи</button>
+    <div class="result" id="result1">Нажмите кнопку</div>
+</div>
+
+<!--2-->
+<div class="task">
+    <h3>Задача 2. Методы массивов и flatten</h3>
+    
+    <div class="code">
+        // 2.1 Найти элементы массива, которые больше указанного числа<br>
+        // 2.2 Сделать из многомерного массива "плоский"
+    </div>
+    
+    <p>Массив чисел (через запятую): <input type="text" id="task2_arr" value="1, 4, 6, 3, 2" style="width: 300px;"></p>
+    <p>Пороговое число: <input type="number" id="task2_threshold" value="2"></p>
+    <p>Многомерный массив: <input type="text" id="task2_nested" value="[1, 4, [34, 1, 20], [6, [6, 12, 8], 6]]" style="width: 400px;"></p>
+    <button onclick="task2_all()">Выполнить все подзадачи</button>
+    <div class="result" id="result2">Нажмите кнопку</div>
+</div>
+
+<!--3 -->
+<div class="task">
+    <h3>Задача 3. Поиск пар и троек чисел, дающих в сумме 0</h3>
+    
+    <div class="code">
+        // 3.1 Найти количество пар чисел, дающих в сумме 0<br>
+        // 3.2 Найти количество троек чисел, дающих в сумме 0
+    </div>
+    
+    <p>Массив чисел (через запятую): <input type="text" id="task3_arr" value="-7, 12, 4, 6, -4, -12, 0" style="width: 400px;"></p>
+    <button onclick="task3_all()">Выполнить все подзадачи</button>
+    <div class="result" id="result3">Нажмите кнопку</div>
+</div>
+
+<script>
+    // Найти максимальную разницу между элементами массива 1.1
+    function maxDifference(arr) {
+        if (arr.length < 2) return 0;
+        
+        let min = arr[0];
+        let max = arr[0];
+        
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] < min) min = arr[i];
+            if (arr[i] > max) max = arr[i];
+        }
+        
+        return max - min;
+    }
+
+    // Вернуть массив без повторяющихся элементов 1.2
+    function removeDuplicates(arr) {
+        let unique = [];
+        
+        for (let i = 0; i < arr.length; i++) {
+            let found = false;
+            for (let j = 0; j < unique.length; j++) {
+                if (arr[i] === unique[j]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                unique.push(arr[i]);
+            }
+        }
+        
+        return unique;
+    }
+
+    // Дан массив объектов, вернуть только те, у которых isDone: true 1.3
+    function filterByDone(objects) {
+        let result = [];
+        
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].isDone === true) {
+                result.push(objects[i]);
+            }
+        }
+        
+        return result;
+    }
+
+    // Найти элементы массива, которые больше указанного числа 2.1
+    function greaterThan(arr, threshold) {
+        let result = [];
+        
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] > threshold) {
+                result.push(arr[i]);
+            }
+        }
+        
+        return result;
+    }
+
+    // Дан многомерный массив произвольной вложенности. Сделать "плоский" массив 2.2
+    function flattenArray(arr) {
+        let result = [];
+        
+        for (let i = 0; i < arr.length; i++) {
+            if (Array.isArray(arr[i])) {
+                let flat = flattenArray(arr[i]);
+                for (let j = 0; j < flat.length; j++) {
+                    result.push(flat[j]);
+                }
+            } else {
+                result.push(arr[i]);
+            }
+        }
+        
+        return result;
+    }
+
+    // Найти, сколько есть в массиве пар чисел, дающих в сумме 0 3.1
+    function countZeroPairs(arr) {
+        let used = new Array(arr.length).fill(false);
+        let count = 0;
+        
+        for (let i = 0; i < arr.length; i++) {
+            if (used[i]) continue;
+            
+            for (let j = i + 1; j < arr.length; j++) {
+                if (used[j]) continue;
+                
+                if (arr[i] + arr[j] === 0) {
+                    count++;
+                    used[i] = true;
+                    used[j] = true;
+                    break;
+                }
+            }
+        }
+        
+        return count;
+    }
+
+    // Найти количество троек чисел, дающих в сумме 0 3.2
+    function countZeroTriplets(arr) {
+        let used = new Array(arr.length).fill(false);
+        let count = 0;
+        
+        for (let i = 0; i < arr.length; i++) {
+            if (used[i]) continue;
+            
+            for (let j = i + 1; j < arr.length; j++) {
+                if (used[j]) continue;
+                
+                for (let k = j + 1; k < arr.length; k++) {
+                    if (used[k]) continue;
+                    
+                    if (arr[i] + arr[j] + arr[k] === 0) {
+                        count++;
+                        used[i] = true;
+                        used[j] = true;
+                        used[k] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return count;
+    }
+
+
+    function parseArrayFromInput(str) {
+        let parts = str.split(',');
+        let arr = [];
+        for (let i = 0; i < parts.length; i++) {
+            let num = parseFloat(parts[i].trim());
+            if (!isNaN(num)) {
+                arr.push(num);
+            }
+        }
+        return arr;
+    }
+
+
+    function parseNestedArray(str) {
+        try {
+            return JSON.parse(str.replace(/'/g, '"'));
+        } catch (e) {
+            console.error("Ошибка парсинга:", e);
+            return [];
+        }
+    }
+
+    //зад1
+    function getDefaultObjects() {
+        return [
+            {id: 1, isDone: true},
+            {id: 2, isDone: false},
+            {id: 3, isDone: true}
+        ];
+    }
+
+    //1
+    function task1_all() {
+        let arrInput = document.getElementById("task1_arr").value;
+        let arr = parseArrayFromInput(arrInput);
+        
+        if (arr.length === 0) {
+            alert("Введите корректный массив чисел");
+            return;
+        }
+        
+        // 1.1
+        let diff = maxDifference(arr);
+        
+        // 1.2
+        let unique = removeDuplicates(arr);
+        
+        // 1.3
+        let objects = getDefaultObjects();
+        let filtered = filterByDone(objects);
+        
+        let filteredText = '[';
+        for (let i = 0; i < filtered.length; i++) {
+            filteredText += '{id: ' + filtered[i].id + ', isDone: ' + filtered[i].isDone + '}';
+            if (i < filtered.length - 1) filteredText += ', ';
+        }
+        filteredText += ']';
+        
+        let output = `
+            <strong>Исходный массив:</strong> [${arr.join(', ')}]<br>
+            <strong>1.1 Максимальная разница между элементами:</strong> ${diff}<br>
+            <strong>1.2 Массив без повторяющихся элементов:</strong> [${unique.join(', ')}]<br>
+            <strong>1.3 Массив объектов:</strong> [{id: 1, isDone: true}, {id: 2, isDone: false}, {id: 3, isDone: true}]<br>
+            <strong>&nbsp;&nbsp;&nbsp;Объекты с isDone: true:</strong> ${filteredText}
+        `;
+        
+        document.getElementById("result1").innerHTML = output;
+        
+        console.log("=== Задача 1 ===");
+        console.log("Исходный массив:", arr);
+        console.log("Максимальная разница:", diff);
+        console.log("Без повторений:", unique);
+        console.log("Отфильтрованные объекты по isDone true:", filtered);
+    }
+
+    //2
+    function task2_all() {
+        let arrInput = document.getElementById("task2_arr").value;
+        let arr = parseArrayFromInput(arrInput);
+        let threshold = parseFloat(document.getElementById("task2_threshold").value);
+        
+        let nestedInput = document.getElementById("task2_nested").value;
+        let nestedArr = parseNestedArray(nestedInput);
+        
+        if (arr.length === 0) {
+            alert("Введите корректный массив чисел");
+            return;
+        }
+        
+        // 2.1
+        let greater = greaterThan(arr, threshold);
+        
+        // 2.2
+        let flat = flattenArray(nestedArr);
+        
+        let output = `
+            <strong>Исходный массив:</strong> [${arr.join(', ')}]<br>
+            <strong>2.1 Элементы больше ${threshold}:</strong> [${greater.join(', ')}]<br>
+            <strong>Многомерный массив:</strong> ${JSON.stringify(nestedArr)}<br>
+            <strong>2.2 Плоский массив:</strong> [${flat.join(', ')}]
+        `;
+        
+        document.getElementById("result2").innerHTML = output;
+        
+        console.log("=== Задача 2 ===");
+        console.log("Исходный массив:", arr);
+        console.log("Элементы больше", threshold + ":", greater);
+        console.log("Многомерный массив:", nestedArr);
+        console.log("Плоский массив:", flat);
+    }
+
+    //3
+    function task3_all() {
+        let arrInput = document.getElementById("task3_arr").value;
+        let arr = parseArrayFromInput(arrInput);
+        
+        if (arr.length === 0) {
+            alert("Введите корректный массив чисел");
+            return;
+        }
+        
+        // 3.1
+        let pairs = countZeroPairs(arr.slice()); // копия массива
+        
+        // 3.2
+        let triplets = countZeroTriplets(arr.slice());
+        
+        let output = `
+            <strong>Исходный массив:</strong> [${arr.join(', ')}]<br>
+            <strong>3.1 Количество пар, дающих в сумме 0:</strong> ${pairs}<br>
+            <strong>3.2 Количество троек, дающих в сумме 0:</strong> ${triplets}
+        `;
+        
+        document.getElementById("result3").innerHTML = output;
+        
+        console.log("=== Задача 3 ===");
+        console.log("Исходный массив:", arr);
+        console.log("Количество пар (сумма 0):", pairs);
+        console.log("Количество троек (сумма 0):", triplets);
+        
+
+        console.log("--- Проверка тестовых примеров ---");
+        let test1 = [-7, 12, 4, 6, -4, -12, 0];
+        let test2 = [-1, 2, 4, 7, -4, 1, -2];
+        let test3 = [-1, 1, 0, 1];
+        let test4 = [-1, 1, -1, 1];
+        let test5 = [1, 1, 1, 0, -1];
+        let test6 = [0, 0];
+        
+        console.log("f([-7, 12, 4, 6, -4, -12, 0]) ->", countZeroPairs(test1), "(ожидается 2)");
+        console.log("f([-1, 2, 4, 7, -4, 1, -2]) ->", countZeroPairs(test2), "(ожидается 3)");
+        console.log("f([-1, 1, 0, 1]) ->", countZeroPairs(test3), "(ожидается 1)");
+        console.log("f([-1, 1, -1, 1]) ->", countZeroPairs(test4), "(ожидается 2)");
+        console.log("f([1, 1, 1, 0, -1]) ->", countZeroPairs(test5), "(ожидается 1)");
+        console.log("f([0, 0]) ->", countZeroPairs(test6), "(ожидается 1)");
+    }
+</script>
+
+</body>
+</html>
