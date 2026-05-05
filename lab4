@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .task {
+            margin-bottom: 20px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .code {
+            font-family: monospace;
+            background: #eee;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 5px;
+        }
+        button {
+            margin: 5px 0;
+        }
+        input {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Лабораторная</h1>
+
+<!--1-->
+<div class="task">
+    <h3>1. Переменные admin и name</h3>
+    <div class="code">let name = "Джон"; let admin = name; alert(admin);</div>
+    <button onclick="task1()">Запустить</button>
+    <div class="result" id="result1">Нажмите</div>
+</div>
+
+<!--2-->
+<div class="task">
+    <h3>2. Исправить сложение</h3>
+    <p>Ошибка: prompt возвращает строки, нужно преобразовать в числа</p>
+    <div class="code">let a = prompt(); let b = prompt(); alert(Number(a)+Number(b));</div>
+    <button onclick="task2()">Запустить сложение</button>
+    <div class="result" id="result2">Нажмите</div>
+</div>
+
+<!--3-->
+<div class="task">
+    <h3>3. Чётные числа от 2 до 10</h3>
+    <div class="code">for (let i=2; i<=10; i+=2) alert(i);</div>
+    <button onclick="task3()">Показать чётные числа</button>
+    <div class="result" id="result3">Нажмите</div>
+</div>
+
+<!--4-->
+<div class="task">
+    <h3>4. Замена for на while</h3>
+    <div class="code">let i=0; while(i&lt;3) { alert('number ' + i + '!'); i++; }</div>
+    <button onclick="task4()">Выполнить while</button>
+    <div class="result" id="result4">Нажмите</div>
+</div>
+
+<!--5-->
+<div class="task">
+    <h3>5. Повторять пока ввод неверен (число > 100)</h3>
+    <p>Вводите числа, пока не введёте больше 100 или не нажмёте Отмена</p>
+    <button onclick="task5()">Проверить ввод</button>
+    <div class="result" id="result5">Нажмите</div>
+</div>
+
+<!--6 -->
+<div class="task">
+    <h3>6. Простые числа от 2 до n</h3>
+    <p>Введите n: <input type="number" id="nValue" value="10" min="2" step="1"></p>
+    <button onclick="task6()">Найти простые числа</button>
+    <div class="result" id="result6">Нажмите</div>
+</div>
+
+<script>
+    //1
+    function task1() {
+        let name = "Джон";
+        let admin = name;
+        alert(admin);
+        document.getElementById("result1").innerHTML = "Выполнено: alert показал 'Джон'";
+    }
+
+    //2
+    function task2() {
+        let a = prompt("Первое число?", "1");
+        let b = prompt("Второе число?", "2");
+        let sum = Number(a) + Number(b);
+        if (isNaN(sum)) {
+            alert("Ошибка: введите числа");
+            document.getElementById("result2").innerHTML = "Ошибка: нужно ввести числа";
+        } else {
+            alert("Сумма: " + sum);
+            document.getElementById("result2").innerHTML = a + " + " + b + " = " + sum;
+        }
+    }
+
+    //3
+    function task3() {
+        let nums = [];
+        for (let i = 2; i <= 10; i += 2) {
+            alert(i);
+            nums.push(i);
+        }
+        document.getElementById("result3").innerHTML = "Чётные числа: " + nums.join(", ") + " (выведены в alert)";
+    }
+
+    //4
+    function task4() {
+        let i = 0;
+        let msgs = [];
+        while (i < 3) {
+            let msg = "number " + i + "!";
+            alert(msg);
+            msgs.push(msg);
+            i++;
+        }
+        document.getElementById("result4").innerHTML = "Выведены alert: " + msgs.join(", ");
+    }
+
+    // 5
+    function task5() {
+        let attempts = 0;
+        while (true) {
+            let input = prompt("Введите число больше 100 (или Отмена для выхода)", "");
+            attempts++;
+           
+            if (input === null) {
+                alert("Отмена");
+                document.getElementById("result5").innerHTML = "Отмена. Попыток: " + attempts;
+                break;
+            }
+           
+            let num = Number(input);
+            if (isNaN(num)) {
+                alert("Это не число, попробуйте ещё");
+                continue;
+            }
+           
+            if (num > 100) {
+                alert("Верно! " + num + " > 100");
+                document.getElementById("result5").innerHTML = "Успех! Число " + num + " > 100. Попыток: " + attempts;
+                break;
+            } else {
+                alert("Число " + num + " не больше 100. Повторите");
+            }
+        }
+    }
+
+    // 6
+    function isPrime(num) {
+        if (num < 2) return false;
+        if (num === 2) return true;
+        if (num % 2 === 0) return false;
+        for (let d = 3; d * d <= num; d += 2) {
+            if (num % d === 0) return false;
+        }
+        return true;
+    }
+
+    function task6() {
+        let n = parseInt(document.getElementById("nValue").value, 10);
+        if (isNaN(n) || n < 2) {
+            alert("Ошибка: n должно быть >= 2");
+            document.getElementById("result6").innerHTML = "Ошибка: введите число >= 2";
+            return;
+        }
+       
+        let primes = [];
+        for (let i = 2; i <= n; i++) {
+            if (isPrime(i)) primes.push(i);
+        }
+       
+        if (primes.length === 0) {
+            document.getElementById("result6").innerHTML = "Простых чисел от 2 до " + n + " нет";
+        } else {
+            alert("Простые числа: " + primes.join(", "));
+            document.getElementById("result6").innerHTML = "Простые числа от 2 до " + n + ": " + primes.join(", ");
+        }
+    }
+</script>
+
+</body>
+</html>
